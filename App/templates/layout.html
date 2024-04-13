@@ -2,19 +2,25 @@
 <html>
   <head>
   
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-     <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!--Let browser know website is optimized for mobile-->
+    <link rel="stylesheet" href="/static/style.css">
+    
+    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> --> 
+
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.4.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>{% block title %}{% endblock %}</title>
 
   </head>
   <body>
     
-      <nav class="purple">
+      <!-- <nav class="purple">
           <div class="nav-wrapper">
               <a href="#!" class="brand-logo center">{% block page %}{% endblock %}</a>
               <ul id="nav-mobile" class="left">
@@ -44,7 +50,28 @@
               {% endif %}
               
           </div>
+      </nav> -->
+
+      <nav>
+        <div class="nav__logo">
+          <a href="/home"><img src="/images/logo.png" alt="logo" /></a>
+        </div>
+        <ul class="nav__links">
+          <li class="link"><a href="/home">Home</a></li>
+          <li class="link"><a href="/browseExercises_page">Browse Workouts</a></li>
+          <li class = "link"><a href = "/manageWorkouts_page">View/Edit routine</a></li>
+        </ul>
+        {% if is_authenticated %}
+          <a href="/logout">
+            <button class="btn">Logout</button>
+          </a>
+        {% else %}
+            <a href="/home">
+              <button class="btn">Login</button>
+            </a>
+        {% endif %}
       </nav>
+
       <style>
           .navbar-form label {
               color: white !important;

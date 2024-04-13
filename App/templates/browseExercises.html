@@ -1,0 +1,183 @@
+{% extends "layout.html" %}
+{% block title %}Flask MVC App{% endblock %}
+{% block page %}Flask MVC App{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    {% if new_workout == True %}
+        <form class=popup id="popup" action="/createWorkout/{{exercise_id}}/" method="POST">
+            <img src="/images/logo.png" alt="image">
+            <h1>Are you sure you want to create a new workout with this exercise alone?</h1>
+            <div>
+                <button type="submit" class="btn">Yes</button>
+                <button type="button" class="btn" onclick="closePopup()">No</button>
+            </div>
+        </form>
+    {% endif %}
+
+    {% if exercise_id != None %} 
+        <form class=popup id="popup" action="/addExercise/{{exercise_id}}/{{workout_id}}" method="POST">
+            <img src="/images/logo.png" alt="image">
+            <h1>Select the workout you want to add an exercise to</h1>
+            <div class="workoutholder">
+                <ul>
+                    {% for workout in current_user.workouts %}
+                    <a href="/browseExercises_page/add/{{exercise_id}}/{{workout.id}}">
+                        <div>
+                        {% if workout_id != None and workout_id == workout.id %}
+                        <li style="background-color: orange; color: black;">
+                            <p>Workout #{{workout.id}}</p>
+                            {% for exercise in workout.exercises %}
+                            <p>{{exercise.name}}</td>
+                            {% endfor %}
+                        </li>
+                        {% else %}
+                        <li style="background-color: black;">
+                            <p>Workout #{{workout.id}}</p>
+                            {% for exercise in workout.exercises %}
+                            <p>{{exercise.name}}</td>
+                            {% endfor %}
+                        </li> 
+                        {% endif %}              
+                        </div>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+            <button type="submit">Add</button>
+            <div>
+                <a href="/browseExercises_page/newWorkout/{{1}}">New Workout</a>
+            </div>
+            <div>
+                <a href="/browseExercises_page">Close</a> 
+            </div>
+        </form>
+    {% endif %}
+
+    <div class="container">
+        <div class="exercise-list">
+            <h2>Exercise List</h2>
+            <table class = "exercise-options">
+                <tr>
+                    <th>name</th>
+                    <th>category</th>
+                    <th>body part</th>
+                    <th>Tips Video</th>
+                </tr> 
+            {% for exercise in exercises %}
+                <tr>
+                    <td>{{exercise.name}}</td>
+                    <td>{{exercise.category}}</td>
+                    <td>{{exercise.body_part}}</td>
+                    <td><a href="{{exercise.videoLink}}"><button class="btn">Watch</button></a></td>
+                    <td><a href="/browseExercises_page/add/{{exercise.id}}"><button class="btn" onclick="openPopup()">Add</button></td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div class="routine">
+            <h2>Your Routine</h2>
+                {% for workout in current_user.workouts %}
+                    <form action="/removeWorkout/{{workout.id}}" method="POST">
+                        <p>Workout #{{workout.id}}</p>
+                        {% for exercise in workout.exercises %}
+                        <p>
+                            {{exercise.name}}
+                        </p>
+                        {% endfor %}
+                        <button type="submit">Remove Workout from Routine</button>
+                        </p>
+                    </form>
+                {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        let popup = document.getElementById("popup");
+        let isPopupOpen = is_popup_open;
+
+        function openPopup() {
+            popup.classList.add("open-popup"); 
+            isPopupOpen = true;
+        }
+
+        function closePopup() {
+            popup.classList.remove("open-popup"); 
+            isPopupOpen = false;
+        }
+
+        function submitForm() {
+            // Create a hidden form and submit it
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/createWorkout/{{exercise_id}}';
+            document.body.appendChild(form);
+            form.submit();
+}
+    </script>
+</body>
+</html>
+
+<style>
+ body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .exercise-list, .routine {
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        h2 {
+            color: orange;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: orange;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: darkorange;
+        }
+        
+</style>
+    
+{% endblock %}
+
+

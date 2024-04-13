@@ -1,0 +1,188 @@
+{% extends "layout.html" %}
+{% block title %}Flask MVC App{% endblock %}
+{% block page %}Flask MVC App{% endblock %}
+
+{{ super() }}
+
+{% block content %}
+    <span><h1>{{current_user.username}}'s Workout Plan</h1></span>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Manage Workouts</title>
+        <link rel="stylesheet" href="/static/styles.css">
+    </head>
+    <body>
+        <div class="routine">
+                {% for workout in current_user.workouts %}
+                    <form action="/removeWorkout/{{workout.id}}" method="POST">
+                        <p>Workout #{{workout.id}}</p>
+                        {% for exercise in workout.exercises %}
+                        <p>
+                            {{exercise.name}}
+                            <button type="submit">Remove Workout from Routine</button>
+                        </p>
+                        {% endfor %}
+                       
+                        </p>
+                    </form>
+                {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        let popup = document.getElementById("popup");
+        let isPopupOpen = is_popup_open;
+
+        function openPopup() {
+            popup.classList.add("open-popup"); 
+            isPopupOpen = true;
+        }
+
+        function closePopup() {
+            popup.classList.remove("open-popup"); 
+            isPopupOpen = false;
+        }
+
+        function submitForm(exercise_id,workout_id) {
+            // Create a hidden form and submit it
+            var form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/removeExercise/' + exercise_id + ',' + workout_id;
+            document.body.appendChild(form);
+            form.submit();
+}
+    </script>
+    <style>
+      body {
+    font-family: Arial, sans-serif;
+    background-color: #333; /* Darker background for better contrast */
+    color: white;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.exercise-list, .routine {
+    flex: 1;
+    margin: 0 10px;
+}
+
+h2 {
+    color: orange;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+.buttons {
+    margin-top: 20px;
+}
+
+button {
+    background-color: orange;
+    color: black;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: darkorange;
+}
+
+.execise-options th,
+.exercise-options td{
+    border: 1px solid white;
+    padding: 10px;
+    text-align: center;
+}
+
+.exercise-options th{
+    background-color: orange;
+    color: black 
+}
+
+.exercise-options tr:nth-child(even){
+    background-color: #333;
+}
+
+.exercise-options tr:nth-child(odd){
+    background-color: #222;
+}
+
+.popup {
+    border: 2px solid orange;
+    background-color: #333;
+    padding: 20px;
+    margin-top: 50px;
+    width: 300px;
+    max-width: 80%;
+    margin: auto;
+}
+
+.popup h1 {
+    color: orange;
+    text-align: center;
+}
+
+.popup img {
+    display: block;
+    margin: auto;
+}
+
+.popup button {
+    background-color: orange;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.popup button:hover {
+    background-color: darkorange;
+}
+
+.exercise {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    margin-bottom: 10px; 
+}
+
+.exercise-name {
+    flex: 1; 
+}
+
+.remove-button {
+    background-color: red; 
+    color: white;
+    padding: 5px 10px; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.remove-button:hover {
+    background-color: darkred; 
+}
+    </style>
+
+{% endblock %}
+

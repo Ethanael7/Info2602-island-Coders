@@ -1,0 +1,43 @@
+<DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+      </head>
+      <body>
+        
+          
+        <form class="signupForm" action="/signup" method="POST">
+          <div>
+            <h1>SIGNUP PAGE</h1>
+          </div>
+          <div>
+            <label for="username">Username</label>
+            <input name="username" type="text" style="color: black;">   
+          </div>
+          <div>
+            <label for="password">Password</label>
+            <input name="password" type="password" style="color: black;">
+          </div>
+          <div>
+            <button type="submit" class="btn">Signup</button>
+          </div> 
+          <a href="/">Already have an account? login here</a>
+        </form>
+        
+      </body>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script>
+           M.AutoInit();
+    
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                  {% for message in messages %}
+                  M.toast({html: '{{message}}'})
+                  {% endfor %}
+              {% endif %}
+            {% endwith %}
+           
+        </script>
+    </html>
