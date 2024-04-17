@@ -30,15 +30,22 @@ def index_page():
 @auth_views.route('/browseExercises_page/add/<int:exercise_id>/<int:workout_id>', methods=['GET'])
 @auth_views.route('/browseExercises_page/remove/<int:workout_id>', methods=['GET'])
 @auth_views.route('/browseExercises_page/remove/<int:workout_id>/<int:exercise_id>', methods=['GET'])
-@auth_views.route('/browseExercises_page/newWorkout/<int:intNewWorkout>', methods=['GET'])
+@auth_views.route('/browseExercises_page/newWorkout/<int:intNewWorkout>/<exercise_id>', methods=['GET'])
 @jwt_required()
 def browseExercises_page(workout_id=None, exercise_id=None, intNewWorkout=0):
-    exercises = Exercise.query.all()
+
+    q = request.args.get('q', default='', type=str)
+
+    Radio = request.args.get('Radio', default=0, type=int)
+
+    exercises = Exercise.searchResults(q, Radio)
+
     if intNewWorkout == 1:
         new_workout = True
     else:
         new_workout = False
-    return render_template('browseExercises.html', exercises=exercises, workout_id=workout_id, exercise_id=exercise_id, new_workout=new_workout)
+        
+    return render_template('browseExercises.html', exercises=exercises, workout_id=workout_id, exercise_id=exercise_id, new_workout=new_workout, q=q, Radio=Radio)
 
 @auth_views.route('/addExercise/<int:exercise_id>/<int:workout_id>', methods=['POST'])
 @jwt_required()
@@ -50,7 +57,7 @@ def addExercise_action(exercise_id, workout_id):
 @jwt_required()
 def removeExercise_action(exercise_id, workout_id):
     current_user.removeExercise(workout_id, exercise_id)
-    return redirect(url_for('auth_views.browseExercises_page'))
+    return redirect(url_for('auth_views.manageWorkouts_page'))
 
 @auth_views.route('/removeWorkout/<int:workout_id>', methods=['POST'])
 @jwt_required()

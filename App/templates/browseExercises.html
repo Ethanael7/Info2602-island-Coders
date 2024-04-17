@@ -15,7 +15,7 @@
 <body>
     {% if new_workout == True %}
         <form class=popup id="popup" action="/createWorkout/{{exercise_id}}" method="POST">
-            <img src="/images/logo.png" alt="image">
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Are you sure you want to create a new workout with this exercise alone?</h1>
             <div>
                 <button type="submit" class="btn">Yes</button>
@@ -26,7 +26,7 @@
 
     {% if exercise_id != None and new_workout == False %} 
         <form class=popup id="popup" action="/addExercise/{{exercise_id}}/{{workout_id}}" method="POST">
-            <img src="/images/logo.png" alt="image">
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Select the workout you want to add an exercise to</h1>
             <div class="workoutholder">
                 <ul>
@@ -65,77 +65,55 @@
         </form>
     {% endif %}
     <div></div>
-        <section>
-        <form action="/browseExercises_page/search" method="GET">
-
-                <input  value="{{q}}" name="q" type="search" placeholder="Search anything">
-                <button type="submit">Search icon</button>
-                <button type="reset" onclick="this.form.submit()">X(Clear Field) Icon</button>
-            </div>
-
-            <!-- <div class = "search-bar"> -->
-            <!-- <div class="dropdown">
-                <div  id = "drop-text" class ="dropdown-text">
-                     <span>All</span>
-                     <i id = "icon" class = "fa-solid fa-chevron-down"></i>
-                </div>
-                <ul id = "list" class = "dropdown-list">
-                <li class = "dropdown-list-item">All</li>
-                <li class = "dropdown-list-item">Cardio</li>
-                <li class = "dropdown-list-item">Weight Training</li>
-                <li class = "dropdown-list-item">Calisthenics</li>
-                <li class = "dropdown-list-item">Legs</li>
-                <li class = "dropdown-list-item">Back</li>
-                <li class = "dropdown-list-item">Chest</li>
-                <li class = "dropdown-list-item">Shoulders</li>
-                <li class = "dropdown-list-item">Arms</li>
-                <li class = "dropdown-list-item">Abs</li>
-            </ul>
-            </div>
-            
-
+       
+        <form action="/browseExercises_page" method="GET">
             <div class = "search-box">
-                <input  value="{{q}}" name="q" type="search" placeholder="Search anything...">
-                <i calss = "fa-solid fa-magnifying-glass"></i>
-                    <input type="radio" name="Cardio" onchange="this.form.submit()">
-                   
+                <input  value="{{q}}" name="q" type="search" placeholder="Search by name category or body part">
+                <i class = "fa-solid fa-magnifying-glass"></i>
+           
+                <label>
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{0}} {{"checked"  if Radio  == 0}}/>
+                    <span>All</span>
                 </label>
                 <label>
-                    <input type="radio" name="Weight_Training" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{1}} {{"checked"  if Radio  == 1}}/>
                     <span>Weight_Training</span>
                 </label>
                 <label>
-                    <input type="radio" name="Calisthenics" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{2}} {{"checked"  if Radio  == 2}}/>
+                    <span>Cardio</span>
+                </label>
+                <label>
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{3}} {{"checked"  if Radio  == 3}}/>
                     <span>Calisthenics</span>
                 </label>
-    
                 <label>
-                    <input type="radio" name="Legs" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{4}} {{"checked"  if Radio  == 4}}/>
                     <span>Legs</span>
                 </label>
                 <label>
-                    <input type="radio" name="Back" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{5}} {{"checked"  if Radio  == 5}}/>
                     <span>Back</span>
                 </label>
                 <label>
-                    <input type="radio" name="Chest" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{6}} {{"checked"  if Radio  == 6}}/>
                     <span>Chest</span>
                 </label>
                 <label>
-                    <input type="radio" name="Shoulders" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{7}} {{"checked"  if Radio  == 7}}/>
                     <span>Shoulders</span>
                 </label>
                 <label>
-                    <input type="radio" name="Arms" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{8}} {{"checked"  if Radio  == 8}}/>
                     <span>Arms</span>
                 </label>
                 <label>
-                    <input type="radio" name="Abs" onchange="this.form.submit()">
+                    <input type="radio" name="Radio" onchange="this.form.submit()" value={{9}} {{"checked"  if Radio  == 9}}/>
                     <span>Abs</span>
                 </label>
-            </div> -->
+            </div> 
         </form>
-    </section>
+  
 
         <div class="containere">
             <div class="exercise-list">
@@ -169,7 +147,7 @@
                                 {{exercise.name}}
                             </p>
                             {% endfor %}
-                            <button type="submit">Remove Workout from Routine</button>
+                            <button type="submit">Remove Workout</button>
                             </p>
                         </form>
                     </div>
@@ -238,10 +216,6 @@
             form.submit();
 }
     </script>
-
- 
-
-
 </html>
 
 <style>
@@ -249,115 +223,82 @@
             font-family: Arial, sans-serif;
             background-color: black;
             color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 70vh;
+          
         }
- 
-        
-section{
-    margin: 0;
-    padding:0;
-    background: #19161c;
-    box-sizing: border-box;
-    list-style-type: none;
-    font-family: "Montserrat", sans-serif;
-}
-
-.search-bar{
-    display: flex;
-    align-items: center;
-    min-width: 700px;
-    border-radius: 50px;
-    background-color: var(--black);
-
-}
-
-.dropdown{
-    position: relative;
-    width: 280px;
-    border-radius:50px;
-    border: 1px solid var(--white);
-    background-color: var(--orange);
-    box-shadow: var(--shadow);
-    cursor: pointer;
-}
-
-.dropdown-text{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--white);
-    padding: 1rem 1.5rem;
-}
-
-.dropdown-list{
-    position: absolute;
-    top: 4rem;
-    left:0;
-    width: 100%;
-    border-radius: 15px;
-    max-height: 0;
-    overflow:hidden;
-    background-color: var(--black);
-    transition: max-height .5s;
-}
-
-
-#list.show{
-    max-height:300px;
-}
-.dropdown-list-item{
-    font-size:0.9rem;
-    font-weight:500;
-    padding: 1rem 0 1rem 1.5rem;
-    cursor: pointer;
-    transition:margin-left 0.2s ease, color 0.2s ease;
-}
-
-.dropdown-list-item:hover{
-    margin-left: 0.5rem;
-    color:var(--orange)
-}
 
 .search-box{
     display:flex;
     align-items: center;
-    padding-right:1rem;
-    width: 100%;
-    color: var(--orange);
-}
-.search-box input{
-    padding: 1rem;
-    width: 100%;
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--white);
-    border: 0;
-    outline:0;
+    margin-bottom:10px;
 }
 
-.search-box input::placeholder{
-    font-size: 1rem;
-    font-weight:500;
-    color: var(--orange);
-
+.search-box input[type="search"] {
+    flex: 0.5; 
+    padding: 10px;
+    border: 2px solid orange;
+    border-radius: 4px;
+    margin-right: 10px;
+    width: 275px; 
 }
-
-.search-box i{
-    font-size: 1.3rem;
+    
+.search-box label {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
     cursor: pointer;
 }
 
+
+.search-box input[type="radio"] {
+    display: none; 
+}
+
+.search-box label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.search-box label img {
+    width: 20px; 
+    height: 20px; 
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.search-box input[type="radio"]:checked + label:before {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+
+.search-box input[type="radio"]:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.search-box input[type="radio"] + label:after {
+    content: "";
+    display: none;
+}
 
 .containere {
     display: flex;
     justify-content: space-between;
     padding: 20px;
-    border-radius: 1px;
+    border-radius: 5px;
     border: 1px solid #bd6e07;
     overflow:hidden;
 }
@@ -440,6 +381,7 @@ table{
     filter: blur(10px); 
     z-index: -1; 
 }
+
 
        
 
