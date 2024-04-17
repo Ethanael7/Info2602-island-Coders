@@ -15,7 +15,7 @@
 <body>
     {% if new_workout == True %}
         <form class=popup id="popup" action="/createWorkout/{{exercise_id}}" method="POST">
-            <img src="/images/logo.png" alt="image">
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Are you sure you want to create a new workout with this exercise alone?</h1>
             <div>
                 <button type="submit" class="btn">Yes</button>
@@ -26,7 +26,7 @@
 
     {% if exercise_id != None and new_workout == False %} 
         <form class=popup id="popup" action="/addExercise/{{exercise_id}}/{{workout_id}}" method="POST">
-            <img src="/images/logo.png" alt="image">
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Select the workout you want to add an exercise to</h1>
             <div class="workoutholder">
                 <ul>
