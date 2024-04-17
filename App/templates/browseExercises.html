@@ -13,9 +13,24 @@
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
+    {% if workout_id != None and exercise_id == None and new_workout == False %}
+        <form class=popup id="popup" action="/removeWorkout/{{workout_id}}" method="POST">
+            <div class="popupLogo">
+                <img src="/images/island-fitness-logo.png" alt="image">
+            </div>
+            <h1>Are you sure you want to remove this workout from your routine?</h1>
+            <div>
+                <button type="submit" class="btn">Yes</button>
+                <a href="/browseExercises_page"><button type="button" class="btn">No</button></a>
+            </div>
+        </form>
+    {% endif %}
+
     {% if new_workout == True %}
         <form class=popup id="popup" action="/createWorkout/{{exercise_id}}" method="POST">
-            <img src="/images/island-fitness-logo.png" alt="image">
+            <div class="popupLogo">
+                <img src="/images/island-fitness-logo.png" alt="image">
+            </div>
             <h1>Are you sure you want to create a new workout with this exercise alone?</h1>
             <div>
                 <button type="submit" class="btn">Yes</button>
@@ -26,7 +41,9 @@
 
     {% if exercise_id != None and new_workout == False %} 
         <form class=popup id="popup" action="/addExercise/{{exercise_id}}/{{workout_id}}" method="POST">
-            <img src="/images/island-fitness-logo.png" alt="image">
+            <div class="popupLogo">
+                <img src="/images/island-fitness-logo.png" alt="image">
+            </div>
             <h1>Select the workout you want to add an exercise to</h1>
             <div class="workoutholder">
                 <ul>
@@ -140,16 +157,14 @@
                 <h2>Your Routine</h2>
                     {% for workout in current_user.workouts %}
                     <div class = "workout-card">
-                        <form action="/removeWorkout/{{workout.id}}" method="POST">
-                            <p>Workout #{{workout.id}}</p>
-                            {% for exercise in workout.exercises %}
-                            <p>
-                                {{exercise.name}}
-                            </p>
-                            {% endfor %}
-                            <button type="submit">Remove Workout</button>
-                            </p>
-                        </form>
+                        <p>Workout #{{workout.id}}</p>
+                        {% for exercise in workout.exercises %}
+                        <p>
+                            {{exercise.name}}
+                        </p>
+                        {% endfor %}
+                        <a href="/browseExercises_page/remove/{{workout.id}}"><button type="button">Remove Workout</button></a>
+                        </p>
                     </div>
                     {% endfor %}
             </div>
@@ -157,42 +172,6 @@
         <div class="background-image"></div>
     </body>
     <script>
-
-        let dropdownBtn = document.getElementById("drop-text");
-        let list = document.getElementById("list");
-        let icon = document.getElementById("icon");
-        let span = document.getElementById("span");
-        let input = document.getElementById("search-input");
-        let listItems = document.querySelectorAll(".dropdown-list-item")
-
-        dropdownBtn.onclick = function(){
-            if(list.classList.contains('show')){
-                icon.style.rotate = "0deg";
-            }else{
-            icon.style.rotate = "-180deg";
-        }
-            list.classList.toggle("show");  
-    };
-        window.onclick = function(){
-            if(e.target.id !== "drop-text" && 
-            e.target.id !== "span" && 
-            e.target.id !== "icon"){
-                list.classList.remove("show");
-                icon.style.rotate = "0deg";
-            }
-        };
-
-        for(item of listItems){
-            item.onclick = function(e){
-                span.innterText = e.target.innerText;
-
-                if(e.target.innerText == "All"){
-                    input.placeholder = "Search anything...";
-                }else{
-                input.placeholder = "Search in " + e.target.innerText + "...";
-            }
-            };
-        }
 
         let popup = document.getElementById("popup");
         let isPopupOpen = is_popup_open;
