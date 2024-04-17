@@ -227,51 +227,39 @@
     cursor: pointer;
 }
 
-
-.search-box input[type="radio"] {
-    display: none; 
+.search-box input[type="radio"][value = "0"] {
+    transform: scale(1.2);
+}
+.search-box input[type="radio"][value = "1"] {
+    transform: scale(0.5);
+}
+.search-box input[type="radio"][value = "2"] {
+    transform: scale(0.5);
+}
+.search-box input[type="radio"][value = "3"] {
+    transform: scale(0.5);
+}
+.search-box input[type="radio"][value = "4"] {
+    transform: scale(0.7);
+}
+.search-box input[type="radio"][value = "5"] {
+    transform: scale(0.6);
+}
+.search-box input[type="radio"][value = "6"] {
+    transform: scale(0.5);
+}
+.search-box input[type="radio"][value = "7"] {
+    transform: scale(0.5);
+}
+.search-box input[type="radio"][value = "8"] {
+    transform: scale(0.55);
+}
+.search-box input[type="radio"][value = "9"] {
+    transform: scale(0.8);
 }
 
-.search-box label:before {
-    content: "";
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    background-color: #fff;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.search-box label img {
-    width: 20px; 
-    height: 20px; 
-    vertical-align: middle;
-    margin-right: 5px;
-}
-
-.search-box input[type="radio"]:checked + label:before {
-    background-color: #007bff;
-    border-color: #007bff;
-}
 
 
-.search-box input[type="radio"]:checked + label:after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #fff;
-}
-
-.search-box input[type="radio"] + label:after {
-    content: "";
-    display: none;
-}
 
 .containere {
     display: flex;
