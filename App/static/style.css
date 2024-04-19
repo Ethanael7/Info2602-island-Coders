@@ -4,8 +4,8 @@
     --primary-color: #111317;
     --primary-color-light: #1f2125;
     --primary-color-extra-light: #35373b;
-    --secondary-color: #f9ac54;
-    --secondary-color-dark: #d79447;
+    --secondary-color: #fd6500;
+    --secondary-color-dark: #fa6400;
     --text-light: #d1d5db;
     --white: #ffffff;
     --max-width: 1200px;
@@ -51,7 +51,6 @@ body {
 }
 
 nav {
-    max-width: var(--max-width);
     margin: auto;
     padding: 2rem 1rem;
     display: flex;
@@ -98,7 +97,7 @@ nav {
     box-sizing: border-box;
 }
 body{
-    background-color: #080710;
+    background-color: #000000;
 }
 .background{
     width: 430px;
@@ -205,7 +204,7 @@ input{
 button{
     margin-top: 30px;
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--secondary-color);
     color: #080710;
     padding: 15px 0;
     font-size: 18px;
@@ -330,6 +329,8 @@ button{
   border: 2px solid transparent;
   border-radius: 10px;
   transition: 0.3s;
+  height: 600px;
+  width: 600px;
 }
 
 .explore__card:hover {
@@ -661,11 +662,9 @@ button{
   color: var(--white);
 }
 
-@media (width < 900px) {
+@media (max-width: 900px) {
   .nav__links {
-    display: none;
   }
-
   .header__container {
     grid-template-columns: repeat(1, 1fr);
   }
@@ -700,7 +699,7 @@ button{
   }
 }
 
-@media (width < 600px) {
+@media (max-width: 600px) {
   .explore__header {
     flex-direction: column;
   }
@@ -756,6 +755,7 @@ button{
   visibility: visible;
   transition: transform 0.4s, top 0.4s;
   z-index: 1;
+  position: fixed;
 }
 
 .open-popup{
@@ -782,5 +782,68 @@ button{
   height: 180px;
   margin-left: 160px;
 }
+
+.checkbtn{
+  font-size: 50px;
+  float: right;
+  line-height: 80px;
+  margin-right: 40px;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  display: none;
+}
+
+#check{
+  display: none;
+}
+
+@media (max-width: 900px){
+  .checkbtn{
+    display: block;
+  }
+
+  .nav__links{
+    margin-top: 40px;
+    display: block;
+    float: left;
+    position: fixed;
+    width: 100%;
+    height: 1200vh;
+    background: grey;
+    top: 170px;
+    left: -100%;
+    text-align: center;
+    z-index: 1;
+    transition: all .5s;
+  } 
+
+  .navbar .nav__links .link{
+    display: inline-block;
+    padding: 100px;
+    margin: 50px 0;
+    line-height: 30px;
+  }
+
+  .navbar{
+    position: fixed;
+    width: 100%;
+  }
+
+  .navbar .nav__links .link .linka {
+    font-size: 30px;
+  }
+
+  .linka:hover, .linka.active{
+    background: none;
+    color: var(--secondary-color);
+  } 
+
+  #check:checked ~ .nav__links{
+    left: 0;
+  }
+}
+
+
 
   

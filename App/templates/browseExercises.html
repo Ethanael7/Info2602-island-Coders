@@ -8,8 +8,8 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
@@ -84,10 +84,15 @@
     <div></div>
        
         <form action="/browseExercises_page" method="GET">
+            <span>
             <div class = "search-box">
                 <input  value="{{q}}" name="q" type="search" placeholder="Search by name category or body part">
                 <i class = "fa-solid fa-magnifying-glass"></i>
+            </div>
+            </span>
            
+            <span>
+            <div class = "search-box">
                 <label>
                     <input type="radio" name="Radio" onchange="this.form.submit()" value={{0}} {{"checked"  if Radio  == 0}}/>
                     <span>All</span>
@@ -129,6 +134,7 @@
                     <span>Abs</span>
                 </label>
             </div> 
+        </span>
         </form>
   
 
@@ -209,6 +215,7 @@
     display:flex;
     align-items: center;
     margin-bottom:10px;
+    justify-content: space-between;
 }
 
 .search-box input[type="search"] {
