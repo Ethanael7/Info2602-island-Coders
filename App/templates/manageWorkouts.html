@@ -11,9 +11,22 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Manage Workouts</title>
-        <link rel="stylesheet" href="/static/styles.css">
+        <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
+        {% if workout_id != None and exercise_id != None %}
+            <form class=popup id="popup" action="/removeExercise/{{exercise_id}}/{{workout_id}}" method="POST">
+                <div class="popupLogo">
+                    <img src="/images/island-fitness-logo.png" alt="image">
+                </div>
+                <h1>Are you sure you want to remove this exercise from this workout?</h1>
+                <div>
+                    <button type="submit" class="btn">Yes</button>
+                    <a href="/manageWorkouts_page"><button type="button" class="btn">No</button></a>
+                </div>
+            </form>
+        {% endif %}
+
         <div class="routine">
             <span class="user-info"><h1>{{current_user.username}}'s Workout Plan</h1></span>
             {% for workout in current_user.workouts %}
@@ -31,9 +44,7 @@
                         <tr>
                             <td>{{exercise.name}}</td>
                             <td>
-                                <form action="/removeExercise/{{exercise.id}}/{{workout.id}}" method="POST">
-                                    <button type="submit" class="small-button">Remove {{exercise.name}} from Workout</button>
-                                </form>
+                                <a href="/remove/{{exercise.id}}/{{workout.id}}"><button type="submit" class="small-button">Remove {{exercise.name}} from Workout</button></a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -49,7 +60,7 @@
     </html>
 
     <style>
-     body {
+        body {
             font-family: Arial, sans-serif;
             background-color: black;
             color: white;
@@ -123,32 +134,30 @@
             background-color: darkorange;
         }
 
-    .workout-card {
-    background-color: #000000;
-    border: 5px solid #bd6e07;
-    border-radius: 10px;
-    padding: 10px;
-    margin-bottom: 20px;
-    }
+        .workout-card {
+            background-color: #000000;
+            border: 5px solid #bd6e07;
+            border-radius: 10px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
 
-    .background-image {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('images/gymbackground.jpg');
-    background-size: cover;
-    filter: blur(15px); 
-    z-index: -1; 
-}
+        .background-image {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('images/gymbackground.jpg');
+            background-size: cover;
+            filter: blur(15px); 
+            z-index: -1; 
+        }
 
-.small-button{
-    padding: 5px 10px;
-    font-size: 14px;
-}
-
-
+        .small-button{
+            padding: 5px 10px;
+            font-size: 14px;
+        }
     </style>
 
 {% endblock %}
