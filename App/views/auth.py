@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
+from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
 from sqlalchemy.exc import IntegrityError
 
@@ -29,6 +29,7 @@ def index_page():
 @auth_views.route('/browseExercises_page/add/<int:exercise_id>', methods=['GET'])
 @auth_views.route('/browseExercises_page/add/<int:exercise_id>/<int:workout_id>', methods=['GET'])
 @auth_views.route('/browseExercises_page/remove/<int:workout_id>', methods=['GET'])
+@auth_views.route('/browseExercises_page/remove/<int:workout_id>/<int:exercise_id>', methods=['GET'])
 @auth_views.route('/browseExercises_page/newWorkout/<int:intNewWorkout>/<exercise_id>', methods=['GET'])
 @jwt_required()
 def browseExercises_page(workout_id=None, exercise_id=None, intNewWorkout=0):
@@ -71,10 +72,9 @@ def createWorkout_action(exercise_id):
     return redirect(url_for('auth_views.browseExercises_page'))
 
 @auth_views.route('/manageWorkouts_page', methods=['GET'])
-@auth_views.route('/remove/<int:exercise_id>/<int:workout_id>', methods=['GET'])
 @jwt_required()
-def manageWorkouts_page(exercise_id=None, workout_id=None):
-    return render_template('manageWorkouts.html', exercise_id=exercise_id, workout_id=workout_id)
+def manageWorkouts_page():
+    return render_template('manageWorkouts.html')
 
 @auth_views.route('/users', methods=['GET'])
 def get_user_page():

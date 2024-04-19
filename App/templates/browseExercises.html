@@ -8,29 +8,14 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-    {% if workout_id != None and exercise_id == None and new_workout == False %}
-        <form class=popup id="popup" action="/removeWorkout/{{workout_id}}" method="POST">
-            <div class="popupLogo">
-                <img src="/images/island-fitness-logo.png" alt="image">
-            </div>
-            <h1>Are you sure you want to remove this workout from your routine?</h1>
-            <div>
-                <button type="submit" class="btn">Yes</button>
-                <a href="/browseExercises_page"><button type="button" class="btn">No</button></a>
-            </div>
-        </form>
-    {% endif %}
-
     {% if new_workout == True %}
         <form class=popup id="popup" action="/createWorkout/{{exercise_id}}" method="POST">
-            <div class="popupLogo">
-                <img src="/images/island-fitness-logo.png" alt="image">
-            </div>
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Are you sure you want to create a new workout with this exercise alone?</h1>
             <div>
                 <button type="submit" class="btn">Yes</button>
@@ -41,9 +26,7 @@
 
     {% if exercise_id != None and new_workout == False %} 
         <form class=popup id="popup" action="/addExercise/{{exercise_id}}/{{workout_id}}" method="POST">
-            <div class="popupLogo">
-                <img src="/images/island-fitness-logo.png" alt="image">
-            </div>
+            <img src="/images/island-fitness-logo.png" alt="image">
             <h1>Select the workout you want to add an exercise to</h1>
             <div class="workoutholder">
                 <ul>
@@ -84,15 +67,10 @@
     <div></div>
        
         <form action="/browseExercises_page" method="GET">
-            <span>
             <div class = "search-box">
                 <input  value="{{q}}" name="q" type="search" placeholder="Search by name category or body part">
                 <i class = "fa-solid fa-magnifying-glass"></i>
-            </div>
-            </span>
            
-            <span>
-            <div class = "search-box">
                 <label>
                     <input type="radio" name="Radio" onchange="this.form.submit()" value={{0}} {{"checked"  if Radio  == 0}}/>
                     <span>All</span>
@@ -134,7 +112,6 @@
                     <span>Abs</span>
                 </label>
             </div> 
-        </span>
         </form>
   
 
@@ -163,14 +140,16 @@
                 <h2>Your Routine</h2>
                     {% for workout in current_user.workouts %}
                     <div class = "workout-card">
-                        <p>Workout #{{workout.id}}</p>
-                        {% for exercise in workout.exercises %}
-                        <p>
-                            {{exercise.name}}
-                        </p>
-                        {% endfor %}
-                        <a href="/browseExercises_page/remove/{{workout.id}}"><button type="button">Remove Workout</button></a>
-                        </p>
+                        <form action="/removeWorkout/{{workout.id}}" method="POST">
+                            <p>Workout #{{workout.id}}</p>
+                            {% for exercise in workout.exercises %}
+                            <p>
+                                {{exercise.name}}
+                            </p>
+                            {% endfor %}
+                            <button type="submit">Remove Workout</button>
+                            </p>
+                        </form>
                     </div>
                     {% endfor %}
             </div>
@@ -178,6 +157,42 @@
         <div class="background-image"></div>
     </body>
     <script>
+
+        let dropdownBtn = document.getElementById("drop-text");
+        let list = document.getElementById("list");
+        let icon = document.getElementById("icon");
+        let span = document.getElementById("span");
+        let input = document.getElementById("search-input");
+        let listItems = document.querySelectorAll(".dropdown-list-item")
+
+        dropdownBtn.onclick = function(){
+            if(list.classList.contains('show')){
+                icon.style.rotate = "0deg";
+            }else{
+            icon.style.rotate = "-180deg";
+        }
+            list.classList.toggle("show");  
+    };
+        window.onclick = function(){
+            if(e.target.id !== "drop-text" && 
+            e.target.id !== "span" && 
+            e.target.id !== "icon"){
+                list.classList.remove("show");
+                icon.style.rotate = "0deg";
+            }
+        };
+
+        for(item of listItems){
+            item.onclick = function(e){
+                span.innterText = e.target.innerText;
+
+                if(e.target.innerText == "All"){
+                    input.placeholder = "Search anything...";
+                }else{
+                input.placeholder = "Search in " + e.target.innerText + "...";
+            }
+            };
+        }
 
         let popup = document.getElementById("popup");
         let isPopupOpen = is_popup_open;
@@ -215,7 +230,6 @@
     display:flex;
     align-items: center;
     margin-bottom:10px;
-    justify-content: space-between;
 }
 
 .search-box input[type="search"] {
@@ -234,39 +248,51 @@
     cursor: pointer;
 }
 
-.search-box input[type="radio"][value = "0"] {
-    transform: scale(1.2);
+
+.search-box input[type="radio"] {
+    display: none; 
 }
-.search-box input[type="radio"][value = "1"] {
-    transform: scale(0.5);
+
+.search-box label:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    transition: background-color 0.3s, border-color 0.3s;
 }
-.search-box input[type="radio"][value = "2"] {
-    transform: scale(0.5);
+
+.search-box label img {
+    width: 20px; 
+    height: 20px; 
+    vertical-align: middle;
+    margin-right: 5px;
 }
-.search-box input[type="radio"][value = "3"] {
-    transform: scale(0.5);
-}
-.search-box input[type="radio"][value = "4"] {
-    transform: scale(0.7);
-}
-.search-box input[type="radio"][value = "5"] {
-    transform: scale(0.6);
-}
-.search-box input[type="radio"][value = "6"] {
-    transform: scale(0.5);
-}
-.search-box input[type="radio"][value = "7"] {
-    transform: scale(0.5);
-}
-.search-box input[type="radio"][value = "8"] {
-    transform: scale(0.55);
-}
-.search-box input[type="radio"][value = "9"] {
-    transform: scale(0.8);
+
+.search-box input[type="radio"]:checked + label:before {
+    background-color: #007bff;
+    border-color: #007bff;
 }
 
 
+.search-box input[type="radio"]:checked + label:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #fff;
+}
 
+.search-box input[type="radio"] + label:after {
+    content: "";
+    display: none;
+}
 
 .containere {
     display: flex;

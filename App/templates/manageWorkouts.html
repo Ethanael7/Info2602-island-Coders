@@ -14,19 +14,6 @@
         <link rel="stylesheet" href="/static/styles.css">
     </head>
     <body>
-        {% if workout_id != None and exercise_id != None %}
-            <form class=popup id="popup" action="/removeExercise/{{exercise_id}}/{{workout_id}}" method="POST">
-                <div class="popupLogo">
-                    <img src="/images/island-fitness-logo.png" alt="image">
-                </div>
-                <h1>Are you sure you want to remove this exercise from this workout?</h1>
-                <div>
-                    <button type="submit" class="btn">Yes</button>
-                    <a href="/manageWorkouts_page"><button type="button" class="btn">No</button></a>
-                </div>
-            </form>
-        {% endif %}
-
         <div class="routine">
             <span class="user-info"><h1>{{current_user.username}}'s Workout Plan</h1></span>
             {% for workout in current_user.workouts %}
@@ -44,7 +31,9 @@
                         <tr>
                             <td>{{exercise.name}}</td>
                             <td>
-                                <a href="/remove/{{exercise.id}}/{{workout.id}}"><button type="submit" class="small-button">Remove {{exercise.name}} from Workout</button></a>
+                                <form action="/removeExercise/{{exercise.id}}/{{workout.id}}" method="POST">
+                                    <button type="submit" class="small-button">Remove {{exercise.name}} from Workout</button>
+                                </form>
                             </td>
                         </tr>
                         {% endfor %}
